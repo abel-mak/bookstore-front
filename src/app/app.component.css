@@ -1,0 +1,27 @@
+.brand-logo {
+  width: 100px;
+  height: auto;
+}
+
+.container {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header {
+  background-color: #f1f1f1;
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+}
+
