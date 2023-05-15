@@ -1,12 +1,18 @@
 <section class="content">
-    <form action="" #f="ngForm" class="my-form" (ngSubmit)="onSubmit(f)">
+    <form action="" [formGroup]="loginForm" class="my-form" (ngSubmit)="onSubmit()">
         <mat-form-field style="width: 100%;" appearance="outline">
             <mat-label>username</mat-label>
-            <input name="username" ngModel matInput>
+            <input name="username" formControlName="username" matInput>
+            <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
+                username required
+            </mat-error>
         </mat-form-field>
         <mat-form-field style="width: 100%" appearance="outline">
             <mat-label matInput>password</mat-label>
-            <input type="password" name="password" ngModel matInput>
+            <input type="password" name="password" formControlName="password" matInput>
+            <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+                password required
+            </mat-error>
         </mat-form-field>
         <button mat-raised-button color="primary" type="submit">Login</button>
     </form>
