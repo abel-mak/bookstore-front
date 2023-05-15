@@ -2,8 +2,8 @@
     <mat-toolbar color="primary">
       <span style="font-style: oblique;">Bookstore</span>
       <span class="spacer"></span>
-      <button mat-button (click)="navigateToHome()">Home</button>
-      <button mat-button>Orders</button>
-      <button mat-button (click)="navigateToLogin()">Login</button>
+      <a mat-button routerLink="/home">Home</a>
+      <a mat-button>Orders</a>
+      <a mat-button routerLink="/">Login</a>
     </mat-toolbar>
   </header>
