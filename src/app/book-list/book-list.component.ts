@@ -13,16 +13,16 @@ import { MatButtonModule } from '@angular/material/button';
 export class BookListComponent {
   books: any[] = [
     {
-      name: 'Book 1',
-      description: 'Description of Book 1'
+      title: 'Book 1',
+      author: 'author name of Book 1'
     },
     {
-      name: 'Book 2',
-      description: 'Description of Book 2'
+      title: 'Book 2',
+      author: 'author name of Book 2'
     },
     {
-      name: 'Book 3',
-      description: 'Description of Book 3'
+      title: 'Book 3',
+      author: 'author name of Book 3'
     }
   ];
 
