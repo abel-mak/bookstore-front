@@ -11,6 +11,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
+import { EffectsModule } from '@ngrx/effects';
+import { NotificationEffect } from './notification/notification.effects';
+import { StoreModule } from '@ngrx/store';
+import { AuthEffects } from './auth/auth.effects';
+import { authReducer } from './auth/auth.reducer';
+import { OrderComponent } from './order/order.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +32,11 @@ import { HeaderComponent } from './header/header.component';
     MatIconModule,
     MatButtonModule,
     LoginComponent,
-    HeaderComponent
+    HeaderComponent,
+    OrderComponent,
+    StoreModule.forRoot(),
+    StoreModule.forFeature('auth', authReducer),
+    EffectsModule.forRoot([NotificationEffect, AuthEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]

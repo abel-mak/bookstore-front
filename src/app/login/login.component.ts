@@ -7,6 +7,9 @@ import { Form, FormControl, FormGroup, NgForm, ReactiveFormsModule, Validators }
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Store } from '@ngrx/store';
+import { authenticatedAction } from '../auth/auth.actions';
+import { shownNotificationAction } from '../notification/notification.actions';
 
 
 @Component({
@@ -20,7 +23,7 @@ export class LoginComponent {
   form: any;
   loginForm: FormGroup
 
-  constructor(private http: HttpClient, private snackBar: MatSnackBar) {
+  constructor(private http: HttpClient, private snackBar: MatSnackBar, private store: Store) {
     this.loginForm = new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
@@ -43,16 +46,24 @@ export class LoginComponent {
       .subscribe({
         next: (value: any) => {
           if (value.result != 1) {
-            const desciption = null
-            this.snackBar.open((desciption == 'InvalidUserNameOrPassword') ? desciption : "username or password incorrect", 'Close', { duration: 3000 });
-
+            const desciption = value.desciption;
+            this.store.dispatch(
+              shownNotificationAction(
+                {
+                  message: (desciption == 'InvalidUserNameOrPassword')
+                    ? desciption
+                    : "username or password incorrect"
+                }))
+          }
+          else {
+            this.store.dispatch(authenticatedAction())
           }
         },
         error: (error: any) => {
           console.log("error:", error);
           // const errorDetail = error?.error?.error?.details;
           // console.log(errorDetail);
-          this.snackBar.open( "an error occured", 'Close', { duration: 3000 });
+          this.snackBar.open("an error occured", 'Close', { duration: 3000 });
         }
       })
   }
