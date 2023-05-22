@@ -15,8 +15,15 @@ import { EffectsModule } from '@ngrx/effects';
 import { NotificationEffect } from './notification/notification.effects';
 import { StoreModule } from '@ngrx/store';
 import { AuthEffects } from './auth/auth.effects';
-import { authReducer } from './auth/auth.reducer';
+import { IAuthState, authReducer } from './auth/auth.reducer';
 import { OrderComponent } from './order/order.component';
+import { initState } from './meta-reducers/init-state.reducer';
+import { ActionReducerMap } from '@ngrx/store';
+import { LocalStorageService } from './local-storage/local-storage.service';
+
+export const reducers: ActionReducerMap<any> = {
+  auth: authReducer
+};
 
 @NgModule({
   declarations: [
@@ -34,11 +41,13 @@ import { OrderComponent } from './order/order.component';
     LoginComponent,
     HeaderComponent,
     OrderComponent,
-    StoreModule.forRoot(),
+    StoreModule.forRoot(reducers, {
+      metaReducers: [initState]
+    }),
     StoreModule.forFeature('auth', authReducer),
     EffectsModule.forRoot([NotificationEffect, AuthEffects]),
   ],
-  providers: [],
+  providers: [LocalStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

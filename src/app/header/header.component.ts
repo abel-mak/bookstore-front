@@ -6,6 +6,8 @@ import { Router, RouterModule } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { Store } from '@ngrx/store';
 import { shownNotificationAction } from '../notification/notification.actions';
+import { HttpClient } from '@angular/common/http';
+import { unauthenticatedAction } from '../auth/auth.actions';
 
 @Component({
   selector: 'app-header',
@@ -16,10 +18,15 @@ import { shownNotificationAction } from '../notification/notification.actions';
 })
 export class HeaderComponent {
 
-  constructor(private store: Store) {
+  constructor(private store: Store, private http: HttpClient) {
   }
 
-  click() {
-    this.store.dispatch(shownNotificationAction({ message: "hello world" }))
+  logout() {
+    this.http.get("https://localhost:44328/api/account/logout")
+      .subscribe({
+        next: () => {
+          this.store.dispatch(unauthenticatedAction())
+        }
+      })
   }
 }

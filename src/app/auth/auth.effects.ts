@@ -4,10 +4,13 @@ import { authenticatedAction, unauthenticatedAction } from './auth.actions';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
+import { LocalStorageService } from '../local-storage/local-storage.service';
 
 @Injectable()
 export class AuthEffects {
-    constructor(private actions$: Actions, private router: Router) {
+    constructor(private actions$: Actions, 
+        private router: Router,
+        private localStorageService: LocalStorageService) {
     }
 
     //effect that is listening for authenticated action
