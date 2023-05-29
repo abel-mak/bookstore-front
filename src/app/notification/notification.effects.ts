@@ -14,9 +14,9 @@ export class NotificationEffect {
 
     showNotification = createEffect(() => {
         return this.actions$.pipe(ofType(shownNotificationAction),
-            tap(({message}) => {
+            tap(({ message }) => {
                 this.snackBar.open(message, 'Close', { duration: 3000 })
             }))
-    }, {dispatch: false})
+    }, { dispatch: false })
 
 }

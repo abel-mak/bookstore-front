@@ -29,12 +29,14 @@ export class LoginComponent {
       password: new FormControl('', Validators.required)
     })
   }
-  ngOnInit() { }
+
+  ngOnInit() {
+
+  }
   onSubmit() {
     // form.preventDefault()
     const { username, password } = this.loginForm.value;
 
-    console.log(this.loginForm.valid)
     if (!this.loginForm.valid)
       return;
     /* send values to server */
@@ -42,7 +44,7 @@ export class LoginComponent {
       userNameOrEmailAddress: username,
       password,
       rememberMe: true
-    })
+    }, {withCredentials: true})
       .subscribe({
         next: (value: any) => {
           if (value.result != 1) {
@@ -61,8 +63,6 @@ export class LoginComponent {
         },
         error: (error: any) => {
           console.log("error:", error);
-          // const errorDetail = error?.error?.error?.details;
-          // console.log(errorDetail);
           this.snackBar.open("an error occured", 'Close', { duration: 3000 });
         }
       })

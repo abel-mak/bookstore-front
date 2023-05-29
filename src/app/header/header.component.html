@@ -2,9 +2,9 @@
   <mat-toolbar color="primary">
     <span style="font-style: oblique;">Bookstore</span>
     <span class="spacer"></span>
-    <a mat-button routerLink="/">Login</a>
+    <a mat-button routerLink="/" *ngIf="!isAuthenticated">Login</a>
     
-    <button mat-button [matMenuTriggerFor]="menu">menu</button>
+    <button mat-button [matMenuTriggerFor]="menu" *ngIf="isAuthenticated">menu</button>
     <mat-menu #menu="matMenu">
       <a mat-menu-item routerLink="/home">Home</a>
       <a mat-menu-item routerLink="/order">Orders</a>

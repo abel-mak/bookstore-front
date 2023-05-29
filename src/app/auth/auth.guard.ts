@@ -13,11 +13,10 @@ export const authGuard: CanActivateFn = (route, state) => {
     map((isAuthenticated: boolean) => {
       if (isAuthenticated && route.routeConfig?.path == "") {
         store.dispatch(shownNotificationAction({ message: "You are currently logged in" }))
-        return (createUrlTreeFromSnapshot(route, ["/home"]));
+        return createUrlTreeFromSnapshot(route, ["/home"]);
       }
       else if (!isAuthenticated && route.routeConfig?.path != "")
         return (createUrlTreeFromSnapshot(route, ["/"]))
-      console.log(isAuthenticated)
       return (true);
     }))
 };

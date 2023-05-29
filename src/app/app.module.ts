@@ -15,7 +15,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { NotificationEffect } from './notification/notification.effects';
 import { StoreModule } from '@ngrx/store';
 import { AuthEffects } from './auth/auth.effects';
-import { IAuthState, authReducer } from './auth/auth.reducer';
+import { authReducer } from './auth/auth.reducer';
 import { OrderComponent } from './order/order.component';
 import { initState } from './meta-reducers/init-state.reducer';
 import { ActionReducerMap } from '@ngrx/store';
@@ -44,7 +44,7 @@ export const reducers: ActionReducerMap<any> = {
     StoreModule.forRoot(reducers, {
       metaReducers: [initState]
     }),
-    StoreModule.forFeature('auth', authReducer),
+    // StoreModule.forFeature('auth', authReducer),
     EffectsModule.forRoot([NotificationEffect, AuthEffects]),
   ],
   providers: [LocalStorageService],

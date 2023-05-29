@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Store } from '@ngrx/store';
+import { shownNotificationAction } from '../notification/notification.actions';
 
 @Component({
   selector: 'app-book-list',
@@ -27,13 +29,13 @@ export class BookListComponent implements OnInit {
       authorName: 'author name of Book 3'
     }
   ];
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private store: Store) {
   }
 
   ngOnInit() {
-    this.http.get("https://localhost:44328/api/app/book")
+    this.http.get("https://localhost:44328/api/app/book", {withCredentials: true})
       .subscribe({
-        next: (value : any) => {
+        next: (value: any) => {
           this.books = value.items;
           console.log(value);
         },
@@ -44,8 +46,25 @@ export class BookListComponent implements OnInit {
 
   }
 
-  orderBook(book: any) {
+  orderBook(bookId: any) {
+    console.log(document.cookie)
     // Handle the order button click event here
-    console.log('Ordered:', book);
+    console.log('Ordered:', bookId);
+    this.http.post(
+      "https://localhost:44328/api/app/order", {
+      bookId,
+      quantity: 1
+    }, {
+      withCredentials: true
+    })
+      .subscribe({
+        next: (value) => {
+          this.store.dispatch(shownNotificationAction({message: 'order created'}))
+        },
+        error: (error) => {
+          console.log(error);
+
+        }
+      })
   }
 }

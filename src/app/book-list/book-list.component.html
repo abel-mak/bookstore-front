@@ -1,10 +1,12 @@
 <section class="container">
   <h2>Book List</h2>
-  <mat-card *ngFor="let book of books" style="margin-top: 1em;" class="card">
-      <mat-card-content>
-        <h1>{{ book.name }}</h1>
-        <h2>Author: {{ book.authorName }}</h2>
-        <button mat-raised-button color="primary" (click)="orderBook(book)">Order</button>
-      </mat-card-content>
-  </mat-card>
+  <div class="list">
+    <mat-card *ngFor="let book of books" style="margin-top: 1em;" class="card">
+        <mat-card-content>
+          <h1>{{ book.name }}</h1>
+          <h2>Author: {{ book.authorName }}</h2>
+          <button mat-raised-button color="primary" (click)="orderBook(book.id)">Order</button>
+        </mat-card-content>
+    </mat-card>
+  </div>
 </section>

@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { DataSource } from '@angular/cdk/collections';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { ConfirmationDialogComponent } from './confirmation-dialog.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 
 export interface PeriodicElement {
@@ -27,19 +30,29 @@ const ELEMENT_DATA: PeriodicElement[] = [
 @Component({
   selector: 'app-order',
   standalone: true,
-  imports: [CommonModule, MatTableModule, HttpClientModule],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    HttpClientModule,
+    MatIconModule,
+    MatButtonModule,
+    ConfirmationDialogComponent,
+    MatDialogModule
+  ],
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent {
   dataSource = [];
-  displayedColumns: string[] = ['bookId', 'quantity', 'orderTime'];
+  displayedColumns: string[] = ['bookId', 'quantity', 'orderTime', 'cancel'];
 
-  constructor(private http: HttpClient) {
-    this.http.get("https://localhost:44328/api/app/order")
+  constructor(private http: HttpClient, private dialog: MatDialog) {
+  }
+
+  ngOnInit() {
+    this.http.get("https://localhost:44328/api/app/order", { withCredentials: true })
       .subscribe({
         next: (value: any) => {
-          console.log(value);
           this.dataSource = value.items;
         },
         error: (err) => {
@@ -47,6 +60,34 @@ export class OrderComponent {
 
         }
       })
+  }
+
+  cancel(Id: string) {
+    const url = new URL("https://localhost:44328/api/app/order");
+    const params = new URLSearchParams({ Id });
+
+    url.search = params.toString();
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      // width: "250px",
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result)
+        return
+      this.http.delete(url.toString(),
+        {
+          withCredentials: true
+        })
+        .subscribe({
+          next: () => {
+            this.dataSource = this.dataSource.filter((order: any) => order.id != Id)
+          },
+          error: (error) => {
+            console.log(error);
+          }
+        })
+    });
   }
 }
 
