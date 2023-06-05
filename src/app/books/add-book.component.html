@@ -1,0 +1,25 @@
+<section class="container">
+    <form action="" [formGroup]="addBookForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <mat-label>Book Name</mat-label>
+            <input matInput formControlName="name">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Publish Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="publishDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Author</mat-label>
+            <mat-select formControlName="authorId">
+                <mat-option *ngFor="let option of authorOptions" [value]="option.id">{{ option.name }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Price</mat-label>
+            <input matInput formControlName="price" type="number" min="1">
+        </mat-form-field>
+        <button mat-raised-button color="primary">Submit</button>
+    </form>
+</section>

@@ -20,6 +20,8 @@ import { OrderComponent } from './order/order.component';
 import { initState } from './meta-reducers/init-state.reducer';
 import { ActionReducerMap } from '@ngrx/store';
 import { LocalStorageService } from './local-storage/local-storage.service';
+import { MatNativeDateModule } from '@angular/material/core';
+import { CommonModule } from '@angular/common';
 
 export const reducers: ActionReducerMap<any> = {
   auth: authReducer
@@ -32,6 +34,7 @@ export const reducers: ActionReducerMap<any> = {
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MatNativeDateModule,
     HomeComponent,
     BookListComponent,
     BrowserAnimationsModule,

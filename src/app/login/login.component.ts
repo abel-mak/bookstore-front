@@ -15,7 +15,15 @@ import { shownNotificationAction } from '../notification/notification.actions';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, MatButtonModule, MatInputModule, FormsModule, HttpClientModule, MatSnackBarModule, ReactiveFormsModule],
+  imports: [CommonModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatInputModule,
+    FormsModule,
+    HttpClientModule,
+    MatSnackBarModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -44,7 +52,7 @@ export class LoginComponent {
       userNameOrEmailAddress: username,
       password,
       rememberMe: true
-    }, {withCredentials: true})
+    }, { withCredentials: true })
       .subscribe({
         next: (value: any) => {
           if (value.result != 1) {
